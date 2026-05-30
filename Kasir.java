@@ -1,4 +1,5 @@
-import java.util.Scanner;
+import javax.swing.*;
+import java.awt.*;
 
 public class Kasir extends User {
 
@@ -8,48 +9,35 @@ public class Kasir extends User {
 
     @Override
     public void displayDashboard() {
-        Scanner scanner = new Scanner(System.in);
-        int choice;
-        do {
-            System.out.println("\n=== Dashboard Kasir: " + getName() + " ===");
-            System.out.println("1. Setor Simpanan");
-            System.out.println("2. Terima Angsuran");
-            System.out.println("3. Input Pengajuan Pinjaman");
-            System.out.println("0. Logout");
-            System.out.print("Pilih menu: ");
-            choice = scanner.nextInt();
+        JFrame frame = new JFrame("Dashboard Kasir - " + getName());
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(400, 300);
+        frame.setLocationRelativeTo(null);
 
-            switch (choice) {
-                case 1:
-                    setorSimpanan();
-                    break;
-                case 2:
-                    terimaAngsuran();
-                    break;
-                case 3:
-                    inputPengajuanPinjaman();
-                    break;
-                case 0:
-                    System.out.println("Logging out...");
-                    break;
-                default:
-                    System.out.println("Pilihan tidak valid.");
-            }
-        } while (choice != 0);
-    }
+        JPanel panel = new JPanel(new GridLayout(4, 1, 10, 10));
+        panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
-    private void setorSimpanan() {
-        System.out.println("[Menu] Form Setor Simpanan dibuka...");
-        // Logika setor simpanan
-    }
+        JButton btnSetor = new JButton("Setor Simpanan");
+        JButton btnAngsuran = new JButton("Terima Angsuran");
+        JButton btnPinjaman = new JButton("Input Pengajuan Pinjaman");
+        JButton btnLogout = new JButton("Logout");
 
-    private void terimaAngsuran() {
-        System.out.println("[Menu] Form Terima Angsuran dibuka...");
-        // Logika terima angsuran
-    }
+        btnSetor.addActionListener(e -> JOptionPane.showMessageDialog(frame, "Membuka form Setor Simpanan..."));
+        btnAngsuran.addActionListener(e -> JOptionPane.showMessageDialog(frame, "Membuka form Terima Angsuran..."));
+        btnPinjaman.addActionListener(e -> JOptionPane.showMessageDialog(frame, "Membuka form Input Pengajuan Pinjaman..."));
+        
+        btnLogout.addActionListener(e -> {
+            frame.dispose(); // Tutup window kasir
+            main.createAndShowLogin(); // Kembali ke panel login
+        });
 
-    private void inputPengajuanPinjaman() {
-        System.out.println("[Menu] Form Input Pengajuan Pinjaman dibuka...");
-        // Logika input pengajuan
+        panel.add(btnSetor);
+        panel.add(btnAngsuran);
+        panel.add(btnPinjaman);
+        panel.add(btnLogout);
+
+        frame.add(panel);
+        frame.setVisible(true);
     }
 }
+

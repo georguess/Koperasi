@@ -1,4 +1,5 @@
-import java.util.Scanner;
+import javax.swing.*;
+import java.awt.*;
 
 public class Admin extends User {
 
@@ -8,48 +9,35 @@ public class Admin extends User {
 
     @Override
     public void displayDashboard() {
-        Scanner scanner = new Scanner(System.in);
-        int choice;
-        do {
-            System.out.println("\n=== Dashboard Admin: " + getName() + " ===");
-            System.out.println("1. Kelola Anggota");
-            System.out.println("2. Approve Pinjaman");
-            System.out.println("3. Laporan");
-            System.out.println("0. Logout");
-            System.out.print("Pilih menu: ");
-            choice = scanner.nextInt();
+        JFrame frame = new JFrame("Dashboard Admin - " + getName());
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(400, 300);
+        frame.setLocationRelativeTo(null);
 
-            switch (choice) {
-                case 1:
-                    kelolaAnggota();
-                    break;
-                case 2:
-                    approvePinjaman();
-                    break;
-                case 3:
-                    lihatLaporan();
-                    break;
-                case 0:
-                    System.out.println("Logging out...");
-                    break;
-                default:
-                    System.out.println("Pilihan tidak valid.");
-            }
-        } while (choice != 0);
-    }
+        JPanel panel = new JPanel(new GridLayout(4, 1, 10, 10));
+        panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
-    private void kelolaAnggota() {
-        System.out.println("[Menu] Kelola Anggota dijalankan...");
-        // Logika kelola anggota di sini
-    }
+        JButton btnKelola = new JButton("Kelola Anggota");
+        JButton btnApprove = new JButton("Approve Pinjaman");
+        JButton btnLaporan = new JButton("Laporan");
+        JButton btnLogout = new JButton("Logout");
 
-    private void approvePinjaman() {
-        System.out.println("[Menu] Approve Pinjaman dijalankan...");
-        // Logika approve pinjaman di sini
-    }
+        btnKelola.addActionListener(e -> JOptionPane.showMessageDialog(frame, "Membuka menu Kelola Anggota..."));
+        btnApprove.addActionListener(e -> JOptionPane.showMessageDialog(frame, "Membuka menu Approve Pinjaman..."));
+        btnLaporan.addActionListener(e -> JOptionPane.showMessageDialog(frame, "Membuka menu Laporan..."));
+        
+        btnLogout.addActionListener(e -> {
+            frame.dispose(); // Tutup window admin
+            main.createAndShowLogin(); // Kembali ke panel login
+        });
 
-    private void lihatLaporan() {
-        System.out.println("[Menu] Melihat Laporan...");
-        // Logika melihat laporan di sini
+        panel.add(btnKelola);
+        panel.add(btnApprove);
+        panel.add(btnLaporan);
+        panel.add(btnLogout);
+
+        frame.add(panel);
+        frame.setVisible(true);
     }
 }
+
